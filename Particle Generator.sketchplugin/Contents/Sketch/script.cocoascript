@@ -1,0 +1,42 @@
+var onRun = function(context) {
+  var doc = context.document;
+  var selection = context.selection;
+  if(selection.length() > 0){
+    selection = selection[0]
+  }else{
+    log('oops')
+    return false
+  }
+  var dimensions = selection.frame();
+
+  log(selection)
+
+  if(!selection){
+    alert('select something')
+    return false
+  }
+  var group = MSLayerGroup.alloc().init();
+  group.name = 'particles'
+
+  var amount = [doc askForUserInput:'Amount:' initialValue:""];
+  var color = [doc askForUserInput:'Color:' initialValue:"#333333"];
+  var minsize = [doc askForUserInput:'Min size' initialValue:"3"];
+  var maxsize = [doc askForUserInput:'Max size:' initialValue:"20"];
+
+  for(var i = 0; i<amount; i++){
+    var shape = MSOvalShape.alloc().init();
+    var r = Math.round(Math.random()*(maxsize-minsize)) + parseInt(minsize)
+    var x = dimensions.x() + Math.round(Math.random() * dimensions.width());
+    var y = dimensions.y() + Math.round(Math.random() * dimensions.height());
+    shape.frame = MSRect.rectWithRect(NSMakeRect(x,y,r,r));
+    shape.name = "particle " + i
+
+    var shapeGroup = MSShapeGroup.shapeWithPath(shape);
+    var fill = shapeGroup.style().fills().addNewStylePart();
+    fill.color = MSColor.colorWithSVGString(color);
+    group.addLayers([shapeGroup])
+  }
+
+  selection.parentGroup().addLayers([group])
+  selection.parentGroup().removeLayer(selection)
+};

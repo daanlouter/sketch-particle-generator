@@ -1,0 +1,23 @@
+{
+  "author" : "Daan Louter",
+  "commands" : [
+    {
+      "script" : "script.cocoascript",
+      "handler" : "onRun",
+      "shortcut" : "",
+      "name" : "Generate particles",
+      "identifier" : "generateparticles"
+    },
+  ],
+  "menu": {
+    "isRoot": true,
+    "items": [
+      "generateparticles",
+    ],
+  },
+  "identifier" : "com.example.sketch.helloworld",
+  "version" : "1.0",
+  "description" : "Generate particles",
+  "authorEmail" : "daan.louter@gmail.com",
+  "name" : "Generate particles"
+}
